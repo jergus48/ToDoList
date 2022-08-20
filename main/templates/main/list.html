@@ -1,0 +1,82 @@
+<!-- list.html -->
+{% extends 'main/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block page_title %}To Do List{% endblock %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+  {% block content %}
+    <h1>{{ls.name}}</h1>
+    <form method="post">
+      {% csrf_token %} 
+      {% for item in ls.item_set.all %}
+        <div class="input-group mb-3">
+          {% if item.complete == True %}
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <input type="checkbox" value="clicked" name="c{{item.id}}" checked />
+                </div>
+              </div>
+                <p class="form-control"><s>{{item.text}}</s></p>
+              {% else %}
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <input type="checkbox" value="clicked" name="c{{item.id}}" />
+                </div>
+              </div>
+                <p class="form-control">{{item.text}}</p>
+              {% endif %}
+            
+          
+          {% if item.complete == True %}
+            <input
+              class="input-group-text date-edit"
+              type="date"
+              name="task-edit-dt"
+              value="{{item.due_date}}"
+              readonly
+            />
+          {% endif %}
+
+          <button
+            type="submit"
+            class="input-group-text trash"
+            name="delete"
+            value="{{item.id}}"
+            type="button"
+          >
+            <i class="fa fa-trash-o" style="font-size: 15px"></i>
+          </button>
+        </div>
+
+      {% endfor %}
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <button
+            type="submit"
+            name="newItem"
+            value="newItem"
+            class="btn btn-success"
+          >
+            Add Item
+          </button>
+          <input type="text" name="new" />
+        </div>
+        
+      </div>
+
+      <button type="submit" name="saver" value="save" class="btn btn-success">
+        Save
+      </button>
+    </form>
+
+  {% endblock %}
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!-- list.html -->
+{% extends 'main/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% block page_title %}Daily List{% endblock %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  {% block content %}
+    <h1>Daily List</h1>
+    <form method="post" action="">
+      {% csrf_token %} 
+      {% for item in user.daily.all %}
+        <div class="input-group mb-3">
+          
+              {% if item.complete == True %}
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input type="checkbox" value="clicked" name="d{{item.id}}" checked />
+                  </div>
+                </div>
+                <a class="form-control"><s>{{item.name}}</s> </a>
+              {% else %}
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input type="checkbox" value="clicked" name="d{{item.id}}" />
+                  </div>
+                </div>
+                <a class="form-control">{{item.name}} </a>
+              {% endif %}
+            
+
+          
+          
+          {% if item.due_date != "" %}
+            <input class="input-group-text" type="time" value= {{item.due_date}} readonly>
+          {% endif %}
+          
+          
+          <button
+            type="submit"
+            class="input-group-text trash"
+            name="delete"
+            value="{{item.id}}"
+          >
+            <i class="fa fa-trash-o" style="font-size: 15px"></i>
+          </button>
+        </div>
+
+      {% endfor %}
+    
+      <button type="submit" name="save" value="save" class="btn btn-success">
+        Save
+      </button>
+      <button type="submit" name="reset" value="reset" class="btn btn-success">
+        Reset
+      </button>
+    
+      <br></br>
+
+      <input type="text" class="form-input" name="name" placeholder="List Name" />
+      <input type="time" name="time" id="time">
+      <button type="submit" name="create" value="create" class="btn btn-success">
+        Create New
+      </button>
+    </form>
+  {% endblock %}
+</body>
+</html>

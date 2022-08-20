@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block page_title %}Home{% endblock %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+
+    {% block content%}
+
+        <h1>Welcome in ToDoList App <span class="name">{{ user.username }}</span> </h1>
+        <p>-set your every day goals</p>
+        <p>-set your life goals/dreams</p>
+        <p>-one day they will come true</p>
+        <p>-date of the day will be here forever</p>
+    {% endblock %}
+    </body>
+</html>
