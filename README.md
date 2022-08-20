@@ -1,5 +1,4 @@
 # ToDoList
-
 Made by:
 
 - Django
