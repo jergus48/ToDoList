@@ -53,8 +53,10 @@ def daily(response):
     
     # num=response.user.daily.count()
     # print(num)
+    dl = response.user.daily.all()
+    userdl=response.user.daily.all().order_by('due_date__hour', 'due_date__minute')
     if response.method =="POST":
-        dl = response.user.daily.all()
+        
     
         if response.POST.get("delete"):
             td_id=response.POST.get("delete")
@@ -64,8 +66,11 @@ def daily(response):
             if len(n)>2:
                 d = Daily(name=n)
                 
-                d.due_date=response.POST["time"]
-                print(d.due_date)
+                time=response.POST["time"]
+                hour=int(time.split(":")[0])
+                minute=int(time.split(":")[-1])
+                date = datetime(2022, 10, 9, hour,minute )
+                d.due_date=date
                 
                 d.complete=False    
                 d.save()
@@ -95,7 +100,7 @@ def daily(response):
             
                       
             
-    return render(response, "main/daily.html", {})
+    return render(response, "main/daily.html", {"dl":userdl})
 
 
 def home(response):

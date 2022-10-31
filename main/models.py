@@ -32,7 +32,7 @@ class Daily(models.Model):
          User, on_delete=models.CASCADE, related_name="daily", null=True)
     name = models.CharField(max_length=300,null=True)
     complete = models.BooleanField()
-    due_date = models.CharField(max_length=20,null=True)
+    due_date = models.DateTimeField(null=True)
 
     def _str_(self):
         return self.text

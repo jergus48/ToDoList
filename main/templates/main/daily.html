@@ -14,7 +14,7 @@
     <h1>Daily List</h1>
     <form method="post" action="">
       {% csrf_token %} 
-      {% for item in user.daily.all %}
+      {% for item in dl %}
         <div class="input-group mb-3">
           
               {% if item.complete == True %}
@@ -37,7 +37,7 @@
           
           
           {% if item.due_date != "" %}
-            <input class="input-group-text" type="time" value= {{item.due_date}} readonly>
+            <input class="input-group-text" type="text" value= "{{item.due_date.hour}}:{{item.due_date.minute}}" readonly>
           {% endif %}
           
           
@@ -59,11 +59,12 @@
       <button type="submit" name="reset" value="reset" class="btn btn-success">
         Reset
       </button>
-    
+    </form>
       <br></br>
-
-      <input type="text" class="form-input" name="name" placeholder="List Name" />
-      <input type="time" name="time" id="time">
+      <form method="post" action="">
+      {% csrf_token %} 
+      <input type="text" class="form-input" name="name" placeholder="List Name" required/>
+      <input type="time" name="time" id="time" required>
       <button type="submit" name="create" value="create" class="btn btn-success">
         Create New
       </button>
